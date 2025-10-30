@@ -5,7 +5,9 @@ El enunciado de la práctica a realizar es el siguiente:
 
 La tarea propuesta pide crear un sistema planetario con al menos cinco planetas y alguna luna, integrando iluminación y texturas. La vista del sistema solar permitirá alternar o mostrar al menos dos vistas: vista general y vista subjetiva desde una nave.
 
-Antes de nada comentar que el código de esta tarea fue desarrollado y probado totalmente en el codesandbox. Por consiguiente os dejo por aquí la práctica en el siguiente enlace:  https://codesandbox.io/p/sandbox/sistema-solar-8dlqmx
+Antes de nada, comentar que el código de esta tarea fue desarrollado y probado totalmente en el codesandbox. 
+
+Por consiguiente os dejo por aquí la práctica en el siguiente enlace:  https://codesandbox.io/p/sandbox/sistema-solar-8dlqmx
 
 Ahora empezaremos a explicar el código implementado en Sistema_planetario.js.
 ```js
