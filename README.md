@@ -9,6 +9,8 @@ Antes de nada, comentar que el código de esta tarea fue desarrollado y probado 
 
 Por consiguiente os dejo por aquí la práctica en el siguiente enlace:  https://codesandbox.io/p/sandbox/sistema-solar-8dlqmx
 
+Además si descargas el VideoProject.mp4 tienes un ejemplo visual del resultado final obtenido, con la autoría en el propio vídeo.
+
 Ahora empezaremos a explicar el código implementado en Sistema_planetario.js.
 ```js
 let scene, renderer;
@@ -101,6 +103,8 @@ animationLoop();
 `init()`: crea escena, cámaras, materiales, objetos, UI y eventos.
 
 `animationLoop()`: actualiza posiciones cada frame y renderiza.
+
+Ahora pasaremos a explicar detalladamente el `init()`.
 
 ```js
   info = document.createElement("div");
@@ -335,3 +339,92 @@ function setView(mode) {
 Alterna la cámara activa y habilita/deshabilita OrbitControls en consecuencia.
 
 Cambia el título de estado.
+
+Para cambiar entre distintas vistas implementamos en el `init`:
+
+```js
+window.addEventListener("keydown", (e) => {
+  if (e.key === "1") setView("overview");
+  if (e.key === "2") setView("ship");
+});
+
+const ui = document.createElement("div");
+// ... crea botones ...
+document.getElementById("btnOverview").onclick = () => setView("overview");
+document.getElementById("btnShip").onclick = () => setView("ship");
+```
+Básicamente, definimos atajos botón 1 (vista principal) / botón 2 (vista nave) y botones equivalentes ("de click") para alternar cámaras.
+
+Por último, en el `init()` tenemos:
+```js
+t0 = Date.now();
+window.addEventListener("resize", onWindowResize);
+```
+`t0` que fija el origen temporal y `resize` para mantener cámaras y renderer sin deformaciones.
+
+Una vez acabado el init, nos quedaría el bucle de animación, es decir el `animationLoop()`.
+```js
+function animationLoop() {
+  timestamp = (Date.now() - t0) * accglobal;
+  requestAnimationFrame(animationLoop);
+```
+`timestamp` es el tiempo simulado (escalado por `accglobal`).
+
+`requestAnimationFrame` re-llama al loop en el siguiente frame.
+
+```js
+for (let object of Planetas) {
+  object.position.x = Math.cos(timestamp * object.userData.speed) * object.userData.f1 * object.userData.dist;
+  object.position.y = Math.sin(timestamp * object.userData.speed) * object.userData.f2 * object.userData.dist;
+}
+```
+Modelo paramétrico 2D (plano XY).
+
+`speed` es la velocidad angular (w).
+
+`dist` es el “radio” base.
+
+`f1, f2` escalan los semiejes de la elipse (si ambos = 1 → círculo).
+
+No hay gravedad real ni integración física; es un modelo visual simple.
+
+```js
+for (let object of Lunas) {
+  object.position.x = Math.cos(timestamp * object.userData.speed) * object.userData.dist;
+  object.position.y = Math.sin(timestamp * object.userData.speed) * object.userData.dist;
+}
+```
+Misma idea, pero su sistema de referencia es el pivote que ya está rotado y anclado al planeta.
+Al mover el planeta, el pivote (y la luna) se mueven con él.
+
+```js
+if (tierraMesh) tierraMesh.rotation.y += 0.003;
+if (nubesMesh)  nubesMesh.rotation.y  += 0.0045;
+```
+Las nubes giran ligeramente más rápido que la superficie.
+
+```js
+if (ship) {
+  ship.position.x = Math.cos(timestamp * ship.userData.speed) * ship.userData.f1 * ship.userData.dist;
+  ship.position.y = Math.sin(timestamp * ship.userData.speed) * ship.userData.f2 * ship.userData.dist;
+
+  if (activeIsShip && shipCamRig) {
+    shipCamRig.position.copy(ship.position); // rig “pegado” a la nave
+    cameraShip.lookAt(ship.position);        // la mira (tercera persona)
+  }
+}
+```
+La nave orbita con sus parámetros.
+
+En vista de nave:
+
+Mueve el rig a la posición de la nave.
+
+La cámara mira a la nave (queda detrás/arriba por el offset).
+
+```js
+renderer.render(scene, activeCamera);
+```
+Dibuja la escena usando la cámara activa (general o nave).
+
+
