@@ -195,6 +195,7 @@ Malla del Sol con algo de emisión (autoiluminado leve).
 
 PointLight “pegada” al Sol: ilumina radialmente al resto.
 
+Ahora pasaremos con la creación de los planetas.
 ```js
 Planeta(0.28, 4.0, 2.0, 0xaaaaaa, 1.0, 1.0);             // Mercurio
 Planetas[0].material = new THREE.MeshPhongMaterial({ map: txMercurio });
@@ -216,11 +217,9 @@ Planetas[5].material = new THREE.MeshPhongMaterial({ color: 0xffffff, map: txNep
 Planetas[5].material.emissive = new THREE.Color(0x2244ff);
 Planetas[5].material.emissiveIntensity = 0.5;
 ```
-`Planeta(radio, dist, vel, color, f1, f2)`:
+Creamos esferas y guardamos en `userData`: `dist`, `speed`, `f1`, `f2` (parámetros orbitales).
 
-Crea esfera y guarda en `userData`: `dist`, `speed`, `f1`, `f2` (parámetros orbitales).
-
-Usamos la siguiente función `Planeta(radio, dist, vel, col, f1, f2)` para crear los planetas:
+Explicamos la siguiente función clave `Planeta(radio, dist, vel, col, f1, f2)`.
 ```js
 const planeta = new THREE.Mesh(
   new THREE.SphereGeometry(radio, 32, 32),
@@ -238,7 +237,7 @@ const mate = new THREE.LineBasicMaterial({ color: 0xffffff });
 const orbita = new THREE.Line(geome, mate);
 scene.add(orbita);
 ```
-Donde se almacenan parámetros orbitales en userData y se pinta una línea elíptica de referencia con `EllipseCurve` (línea visual).
+Se almacenan parámetros orbitales en userData y se pinta una línea elíptica de referencia con `EllipseCurve` (línea visual).
 
 La Tierra usa Phong con:
 
