@@ -12,8 +12,8 @@ let t0 = 0;
 let accglobal = 0.001;
 let timestamp;
 
-let ship; // malla de la astro-nave
-let shipCamRig; // rig que sujeta la cámara de la nave
+let ship;
+let shipCamRig;
 let activeIsShip = false;
 
 // --- TEXTURAS ---
@@ -27,7 +27,7 @@ const txEarthSpec = loader.load("src/earthspec1k.jpg");
 const txCloud = loader.load("src/earthcloudmap.jpg");
 const txCloudAlpha = loader.load("src/earthcloudmaptrans_invert.jpg");
 
-// NUEVAS TEXTURAS
+// Luna, Mercurio, Marte, Jupiter y Saturno
 const txLuna = loader.load("src/8k_moon.jpg");
 const txMercurio = loader.load("src/8k_mercury.jpg");
 const txMarte = loader.load("src/8k_mars.jpg");
@@ -36,16 +36,13 @@ const txSaturno = loader.load("src/8k_saturn.jpg");
 const txNeptuno = loader.load("src/2k_neptune.jpg");
 txNeptuno.colorSpace = THREE.SRGBColorSpace;
 
-// refs a malla tierra y nubes
 let tierraMesh = null;
 let nubesMesh = null;
 
-// parámetros de la astro-nave (entre 7 y 10.5)
 const SHIP_DIST = 8.75; // radio medio entre Tierra y Marte
-const SHIP_F1 = 1.0; // elipse casi circular
+const SHIP_F1 = 1.0;
 const SHIP_F2 = 0.98;
-const SHIP_SPEED = 0.5; // velocidad entre la de Tierra (1.5) y Marte (1.15)
-
+const SHIP_SPEED = 0.5;
 init();
 animationLoop();
 
@@ -71,7 +68,6 @@ function init() {
   cameraOverview = new THREE.PerspectiveCamera(75, aspect, 0.1, 2000);
   cameraOverview.position.set(0, 0, 22);
 
-  // cámara de la nave (se recoloca cada frame con el rig)
   cameraShip = new THREE.PerspectiveCamera(75, aspect, 0.1, 2000);
 
   activeCamera = cameraOverview;
@@ -147,10 +143,9 @@ function init() {
   Luna(Planetas[3], 0.18, 2.4, -1.4, 0xffee99, Math.PI / 1.5);
   Luna(Planetas[4], 0.15, 1.7, 1.1, 0xffffff, 0);
 
-  // NAVE + órbita
+  // NAVE
   createShip();
 
-  // teclado: 1 = general, 2 = nave
   window.addEventListener("keydown", (e) => {
     if (e.key === "1") setView("overview");
     if (e.key === "2") setView("ship");
