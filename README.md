@@ -9,7 +9,7 @@ Antes de nada, comentar que el código de esta tarea fue desarrollado y probado 
 
 Por consiguiente os dejo por aquí la práctica en el siguiente enlace:  https://codesandbox.io/p/sandbox/sistema-solar-8dlqmx
 
-Además si descargas el [Descargar VideoProject.mp4](https://github.com/USUARIO/REPO/blob/main/media/VideoProject.mp4?raw=1)
+Además si descargas el [VideoProject.mp4](https://github.com/guillecab7/IG/edit/main/VideoProject.mp4?raw=1)
 tienes un ejemplo visual del resultado final obtenido, con la autoría en el propio vídeo.
 
 Ahora empezaremos a explicar el código implementado en Sistema_planetario.js.
