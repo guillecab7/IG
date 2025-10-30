@@ -70,7 +70,12 @@ const txSaturno = loader.load("src/8k_saturn.jpg");
 const txNeptuno = loader.load("src/2k_neptune.jpg");
 txNeptuno.colorSpace = THREE.SRGBColorSpace;
 ```
-Aquí importamos las diferentes texturas para cada planeta y para la luna. Además tenemos una textura para el fondo y varias para la tierra.
+Aquí importamos las diferentes texturas para cada planeta y para la luna. 
+
+La mayoría de las texturas fueron tomadas de esta página http://solarsystemscope.com/textures/, quitando las de la tierra que usé las que se proporcionaron en clase de prácticas.
+
+Además tenemos una textura para el fondo y varias para la tierra.
+
 En el caso de la Tierra tenemos las siguientes:
 
 `map`: color difuso.
